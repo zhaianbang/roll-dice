@@ -1,0 +1,69 @@
+//掷象棋 roll dice
+#include<iostream>
+#include<cmath>
+#include<vector>
+#include<algorithm>
+
+using namespace std;
+
+int rolldice()
+{
+	int n1=1+rand()%6;
+	int n2=1+rand()%6;
+	int sum=n1+n2;
+	cout<<"Player rolled the dice twice,the sum of the points is "<<sum<<";"<<endl;
+	return sum;
+}
+
+enum GameStatus{win,lose,playing};
+
+int main()
+{
+	int sum,mypoint;
+	GameStatus status;
+
+	unsigned seed;
+	cout<<"please enter an unsigned integer: ";
+	cin>>seed;
+	srand(seed);
+	sum=rolldice();
+	/*cout<<sum<<endl;*/
+
+	switch(sum)
+	{
+		case 7:
+		case 11:
+			status=win;
+			break;
+		case 2:
+		case 3:
+		case 12:
+			status=lose;
+			break;
+		default:
+			status=playing;
+			mypoint=sum;
+			cout<<"mypoint is "<<mypoint<<";"<<endl;
+			break;
+	}
+	while(status==playing)
+	{
+		sum=rolldice();
+		if(sum==mypoint)
+			status=win;
+		else if(sum==7)
+			status=lose;
+	}
+	if(status==win)
+	{
+		cout<<"player win"<<endl;
+	}
+	else
+	{
+		cout<<"player lose"<<endl;
+	}
+
+
+	system("pause");
+	return 0;
+}
